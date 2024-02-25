@@ -25,7 +25,7 @@
                         <input type="password" class="form-control" id="password-singUp">
                     </div>
                     <div id="modal-footer" class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Sing Up</button>
                     </div>
                 </div>

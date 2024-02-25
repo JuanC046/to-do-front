@@ -1,8 +1,10 @@
 <template class="home">
-  <div>
-    <SingIn/>
-    <br><br>
-    <SingUp/>
+  <div id="home">
+    <div id="home-elements">
+      <SingIn />
+      <br><br>
+      <SingUp />
+    </div>
   </div>
 </template>
 <script>
@@ -31,7 +33,24 @@ export default {
 * {
   margin: 0;
   padding: 0;
+
+}
+
+#home {
   box-sizing: border-box;
   justify-content: space-between;
+  width: auto;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url('../assets/home.webp');
+  /* Ruta de la imagen */
+  background-size: cover;
+  /* Para ajustar la imagen al tamaño del contenedor */
+  background-position: center;
+  /* Para centrar la imagen */
+  /* Opcional: otras propiedades de fondo como repetición, si es necesario */
 }
 </style>

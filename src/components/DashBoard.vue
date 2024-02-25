@@ -1,0 +1,169 @@
+<template>
+    <div>
+        <h3>DashBoard</h3>
+        <div>
+            <div id="header-dashboard">
+                <h4 id="header-dashboard-title">Tasks</h4>
+                <CreateTask />
+            </div>
+            
+            <ul id="tasks-list">
+                <li id="task">
+                    <div id="head-task">
+                        <h5>Task title</h5>
+                        <p>create date</p>
+                        <p>limit date</p>
+                        <label class="do">
+                            <input type="checkbox">
+                            <svg viewBox="0 0 64 64" height="2em" width="2em">
+                                <path
+                                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                                    pathLength="575.0541381835938" class="path"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div id="body-task">
+                        <p class="d-inline-flex gap-1">
+                            <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#task-description" role="button"
+                                aria-expanded="false" aria-controls="task-description">
+                                Description
+                            </a>
+                        </p>
+                        <div class="collapse" id="task-description">
+                            <div id="description-task">
+                                <p>Task description</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
+                <!-- <li id="task" v-for="task in tasks" :key="task.id">
+                    <div id="head-task">
+                        <h5>{{ task.title }}</h5>
+                        <p>{{ task.initDate }}</p>
+                        <p>{{ task.limitDate }}</p>
+                        <label class="do">
+                            <input type="checkbox">
+                            <svg viewBox="0 0 64 64" height="2em" width="2em">
+                                <path
+                                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                                    pathLength="575.0541381835938" class="path"></path>
+                            </svg>
+                        </label>
+                    </div>
+                    <div id="body-task">
+                        <p class="d-inline-flex gap-1">
+                            <a class="" data-bs-toggle="collapse" href="#task-description" role="button"
+                                aria-expanded="false" aria-controls="task-description">
+                                Description
+                            </a>
+                        </p>
+                        <div class="collapse" id="task-description">
+                            <div id="description-task">
+                                <p>{{ task.descrition }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li> -->
+            </ul>
+            
+        </div>
+    </div>
+
+</template>
+<script>
+import CreateTask from '@/components/CreateTask.vue'
+export default {
+    name: 'DashBoard',
+    components: {
+        CreateTask,
+    },
+    data() {
+        return {
+            tasks: []
+        }
+    },
+    methods: {
+        createTask() {
+            console.log('createTask')
+        }
+    }
+}
+</script>
+<style scoped>
+#header-dashboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+}
+#header-dashboard-title {
+    grid-area: t;
+}
+#create-task {
+    grid-area: c;
+}
+#tasks-list {
+    list-style: none;
+    background-color: var(--color-secondary);
+}
+
+#task {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: left;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: var(--color-primary);
+}
+#head-task {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+}
+#body-task {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+#description-task {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+/*-------------------*/
+.do {
+    cursor: pointer;
+}
+
+.do input {
+    display: none;
+}
+
+.do svg {
+    overflow: visible;
+}
+
+.path {
+    fill: none;
+    stroke: white;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999;
+    stroke-dashoffset: 0;
+}
+
+.do input:checked~svg .path {
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
+}
+</style>
