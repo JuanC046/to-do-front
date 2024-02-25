@@ -14,7 +14,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label for="email">e-mail</label>
+                        <label for="email">E-mail</label>
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         <label for="password">Password</label>
@@ -22,7 +22,7 @@
                     </div>
                     <div id="modal-footer" class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Sing In</button>
+                        <button type="button" class="btn btn-success">Sing In</button>
                     </div>
                 </div>
             </div>

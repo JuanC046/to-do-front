@@ -16,7 +16,7 @@
       <br> <br>
       <template v-if="logged">
         <div id="porfile-wrapper">
-          <h4>Porfile</h4>
+          <h4>Welcome</h4>
           <br>
           <h5>Username</h5>
           <br><br>
@@ -45,8 +45,10 @@ export default {
   },
   data() {
     return {
-      logged: true,
     };
+  },
+  props: {
+    logged: Boolean,
   },
   methods: {},
 };

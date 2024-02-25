@@ -18,7 +18,7 @@
                         <input type="text" class="form-control" id="name" aria-describedby="nameHelp">
                         <label for="id">Id</label>
                         <input type="text" class="form-control" id="id" aria-describedby="idHelp">
-                        <label for="email-singUp">e-mail</label>
+                        <label for="email-singUp">E-mail</label>
                         <input type="email" class="form-control" id="email-singUp" aria-describedby="emailHelp">
                         <div id="emailHelp-singUp" class="form-text">We'll never share your email with anyone else.</div>
                         <label for="password">Password</label>
@@ -26,7 +26,7 @@
                     </div>
                     <div id="modal-footer" class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Sing Up</button>
+                        <button type="button" class="btn btn-success">Sing Up</button>
                     </div>
                 </div>
             </div>

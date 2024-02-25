@@ -6,93 +6,102 @@
                 <h4 id="header-dashboard-title">Tasks</h4>
                 <CreateTask />
             </div>
-            
+
             <ul id="tasks-list">
-                <li class="task" v-for=" item in items" key="item">
-                    <div class="head-task">
-                        <h5>Task title</h5>
-                        <p>init date</p>
-                        |
-                        <p>limit date</p>
-                        <label class="do">
-                            <input type="checkbox">
-                            <svg viewBox="0 0 64 64" height="2em" width="2em">
-                                <path
-                                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                                    pathLength="575.0541381835938" class="path"></path>
-                            </svg>
-                        </label>
-                    </div>
-                    <div class="body-task">
-                        <p class="d-inline-flex gap-1">
-                            <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" :href="'#'+'task-description'+item" role="button"
-                                aria-expanded="false" aria-controls="task-description">
-                                Description
-                            </a>
-                        </p>
-                        <div class="collapse" :id="'task-description'+ item">
-                            <div >
-                                <p>Task description</p>
+                <template v-if="logged">
+                    <li class="task" v-for="(task, index) in tasks" :key="index">
+                        <div class="head-task">
+                            <h5>{{ task.title }}</h5>
+                            <p>{{ task.initDate }}</p>
+                            |
+                            <p>{{ task.limitDate }}</p>
+                            <label class="do">
+                                <input type="checkbox">
+                                <svg viewBox="0 0 64 64" height="2em" width="2em">
+                                    <path
+                                        d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                                        pathLength="575.0541381835938" class="path"></path>
+                                </svg>
+                            </label>
+                        </div>
+                        <div class="body-task">
+                            <p class="d-inline-flex gap-1">
+                                <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
+                                    :href="'#' + 'task-description' + item" role="button" aria-expanded="false"
+                                    aria-controls="task-description">
+                                    Description
+                                </a>
+                            </p>
+                            <div class="collapse" :id="'task-description' + item">
+                                <div>
+                                    <p>{{ task.description }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                </li>
+                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                    </li>
+                </template>
 
-
-                <!-- <li class="task" v-for="task in tasks" :key="task.id">
-                    <div class="head-task">
-                        <h5>{{ task.title }}</h5>
-                        <p>{{ task.initDate }}</p>
-                        <p>{{ task.limitDate }}</p>
-                        <label class="do">
-                            <input type="checkbox">
-                            <svg viewBox="0 0 64 64" height="2em" width="2em">
-                                <path
-                                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                                    pathLength="575.0541381835938" class="path"></path>
-                            </svg>
-                        </label>
-                    </div>
-                    <div class="body-task">
-                        <p class="d-inline-flex gap-1">
-                            <a class="" data-bs-toggle="collapse" href="#task-description" role="button"
-                                aria-expanded="false" aria-controls="task-description">
-                                Description
-                            </a>
-                        </p>
-                        <div class="collapse">
-                            <div class="description-task">
-                                <p>{{ task.descrition }}</p>
+                <template v-else>
+                    <li class="task" v-for="item in items" key="item">
+                        <div class="head-task">
+                            <h5>Task title</h5>
+                            <p>init date</p>
+                            |
+                            <p>limit date</p>
+                            <label class="do">
+                                <input type="checkbox" />
+                                <svg viewBox="0 0 64 64" height="2em" width="2em">
+                                    <path
+                                        d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+                                        pathLength="575.0541381835938" class="path"></path>
+                                </svg>
+                            </label>
+                        </div>
+                        <div class="body-task">
+                            <p class="d-inline-flex gap-1">
+                                <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
+                                    :href="'#' + 'task-description' + item" role="button" aria-expanded="false"
+                                    aria-controls="task-description">
+                                    Description
+                                </a>
+                            </p>
+                            <div class="collapse" :id="'task-description' + item">
+                                <div>
+                                    <p>Task description</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li> -->
+                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                    </li>
+                </template>
+
             </ul>
-            
         </div>
     </div>
-
 </template>
 <script>
-import CreateTask from '@/components/CreateTask.vue'
+import CreateTask from "@/components/CreateTask.vue";
 export default {
-    name: 'DashBoard',
+    name: "DashBoard",
     components: {
         CreateTask,
     },
     data() {
         return {
-            tasks: [],
-            items: [1,2,3,4,5,6,7,8,9,10]
-        }
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        };
+    },
+    props: {
+        logged: Boolean,
+        tasks: Array,
     },
     methods: {
         createTask() {
-            console.log('createTask')
-        }
-    }
-}
+            console.log("createTask");
+        },
+    },
+};
 </script>
 <style scoped>
 #dashboard-wrapper {
@@ -102,12 +111,13 @@ export default {
     margin: 16px;
     height: 95%;
     width: auto;
-    overflow-y: auto; /* Añade una barra de desplazamiento vertical cuando sea necesario */
+    overflow-y: auto;
+    /* Añade una barra de desplazamiento vertical cuando sea necesario */
     /*Estilo para el scroll */
     scrollbar-width: thin;
     scrollbar-color: var(--color-secondary) var(--color-primary);
-
 }
+
 #header-dashboard {
     display: flex;
     flex-direction: row;
@@ -115,12 +125,15 @@ export default {
     align-items: center;
     padding: 8px;
 }
+
 #header-dashboard-title {
     grid-area: t;
 }
+
 #create-task {
     grid-area: c;
 }
+
 #tasks-list {
     list-style: none;
 }
@@ -136,19 +149,20 @@ export default {
     background-color: var(--color-secondary);
     color: var(--color-text);
 }
+
 .head-task {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
 }
+
 .body-task {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-align: left;
 }
-
 
 /*-------------------*/
 .do {
