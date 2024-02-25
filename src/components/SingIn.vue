@@ -48,6 +48,9 @@ export default {
 }
 </script>
 <style scoped>
+    #sing-in-modal {
+        color: black;
+    }
     #modal-footer {
         display: flex;
         justify-content:center;

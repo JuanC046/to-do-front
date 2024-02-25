@@ -1,6 +1,6 @@
 <template lang="">
-    <div id="menu">
-    <aside >
+  <div id="menu-wrapper">
+    <aside>
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
           <img
@@ -13,34 +13,62 @@
           <h3>ToDoZen</h3>
         </a>
       </div>
-      <h4>Options</h4>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a type="button" class="nav-link active" aria-current="page" href="#">Active</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-      </ul>
+      <br> <br>
+      <template v-if="logged">
+        <div id="porfile-wrapper">
+          <h4>Porfile</h4>
+          <br>
+          <h5>Username</h5>
+          <br><br>
+          <button class="btn btn-danger" @click="logged = false">Log Out</button>
+        </div>
+      </template>
+      <template v-else>
+        <div>
+          <SingIn />
+          <br />
+          <br />
+          <SingUp />
+        </div>
+      </template>
     </aside>
-    </div>
+  </div>
 </template>
 <script>
+import SingIn from "./SingIn.vue";
+import SingUp from "./SingUp.vue";
 export default {
   name: "Menu",
+  components: {
+    SingIn,
+    SingUp,
+  },
   data() {
-    return {};
+    return {
+      logged: true,
+    };
   },
   methods: {},
 };
 </script>
 <style scoped>
-    #menu {
-    background-color: var(--color-primary);
-    width: 200px;
-    height: 100%;
-    }
+#menu-wrapper {
+  width: 200px;
+  height: 95%;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 10px;
+  border: 2px solid var(--color-primary);
+}
+
+img {
+  border-radius: 10px;
+}
+#porfile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
 </style>

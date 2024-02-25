@@ -1,8 +1,8 @@
 <template lang="">
-    <div>
+    <div id="menu-wrap">
         <!-- Button trigger modal -->
         <button id="button-create-task" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-task">
-            +
+            New Task +
         </button>
         <!-- Modal -->
         <div class="modal fade" id="create-task" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -53,8 +53,15 @@ export default {
 </script>
 
 <style scoped>
+    #create-task {
+        color: black;
+    }
     #button-create-task {
-        background-color: var(--color-primary);
-        border-color: var(--color-primary);
+        background-color: var(--color-secondary);
+        border-color: var(--color-border);
+    }
+    #button-create-task:hover {
+        background-color: var(--color-secondary-hover);
+        border-color: var(--color-border);
     }
 </style>

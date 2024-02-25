@@ -1,7 +1,7 @@
 <template >
     <div id="workSpace-grid">
-        <Menu id="menu"></Menu>
-        <DashBoard id="dashboard"></DashBoard>
+        <Menu class="menu"></Menu>
+        <DashBoard class="dashboard"></DashBoard>
     </div>
 </template>
 <script>
@@ -26,18 +26,20 @@ export default {
     
 }
 </script>
-<style>
+<style scoped>
     #workSpace-grid {
+        width: 95%;
+        margin: 8px;
         display: grid;
-        grid-template-columns: 200px 1fr;
-        grid-template-rows: 100%;
+        height: 500px;
+        grid-template-columns: 200px auto;
         grid-template-areas: "menu dashboard";
-        background-color: var(--color-primary);
+        gap: 16px;
     }
-    #menu {
+    .menu {
         grid-area: menu;
     }
-    #dashboard {
+    .dashboard {
         grid-area: dashboard;
     }
 </style>

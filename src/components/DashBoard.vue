@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="dashboard-wrapper">
         <h3>DashBoard</h3>
         <div>
             <div id="header-dashboard">
@@ -8,10 +8,11 @@
             </div>
             
             <ul id="tasks-list">
-                <li id="task">
-                    <div id="head-task">
+                <li class="task" v-for=" item in items" key="item">
+                    <div class="head-task">
                         <h5>Task title</h5>
-                        <p>create date</p>
+                        <p>init date</p>
+                        |
                         <p>limit date</p>
                         <label class="do">
                             <input type="checkbox">
@@ -22,24 +23,25 @@
                             </svg>
                         </label>
                     </div>
-                    <div id="body-task">
+                    <div class="body-task">
                         <p class="d-inline-flex gap-1">
-                            <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#task-description" role="button"
+                            <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" :href="'#'+'task-description'+item" role="button"
                                 aria-expanded="false" aria-controls="task-description">
                                 Description
                             </a>
                         </p>
-                        <div class="collapse" id="task-description">
-                            <div id="description-task">
+                        <div class="collapse" :id="'task-description'+ item">
+                            <div >
                                 <p>Task description</p>
                             </div>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-outline-danger">Delete</button>
                 </li>
 
 
-                <!-- <li id="task" v-for="task in tasks" :key="task.id">
-                    <div id="head-task">
+                <!-- <li class="task" v-for="task in tasks" :key="task.id">
+                    <div class="head-task">
                         <h5>{{ task.title }}</h5>
                         <p>{{ task.initDate }}</p>
                         <p>{{ task.limitDate }}</p>
@@ -52,15 +54,15 @@
                             </svg>
                         </label>
                     </div>
-                    <div id="body-task">
+                    <div class="body-task">
                         <p class="d-inline-flex gap-1">
                             <a class="" data-bs-toggle="collapse" href="#task-description" role="button"
                                 aria-expanded="false" aria-controls="task-description">
                                 Description
                             </a>
                         </p>
-                        <div class="collapse" id="task-description">
-                            <div id="description-task">
+                        <div class="collapse">
+                            <div class="description-task">
                                 <p>{{ task.descrition }}</p>
                             </div>
                         </div>
@@ -81,7 +83,8 @@ export default {
     },
     data() {
         return {
-            tasks: []
+            tasks: [],
+            items: [1,2,3,4,5,6,7,8,9,10]
         }
     },
     methods: {
@@ -92,6 +95,19 @@ export default {
 }
 </script>
 <style scoped>
+#dashboard-wrapper {
+    background-color: var(--color-primary);
+    border-radius: 10px;
+    padding: 16px;
+    margin: 16px;
+    height: 95%;
+    width: auto;
+    overflow-y: auto; /* Añade una barra de desplazamiento vertical cuando sea necesario */
+    /*Estilo para el scroll */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-secondary) var(--color-primary);
+
+}
 #header-dashboard {
     display: flex;
     flex-direction: row;
@@ -107,10 +123,9 @@ export default {
 }
 #tasks-list {
     list-style: none;
-    background-color: var(--color-secondary);
 }
 
-#task {
+.task {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -118,26 +133,23 @@ export default {
     padding: 10px;
     margin: 10px;
     border-radius: 10px;
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
+    color: var(--color-text);
 }
-#head-task {
+.head-task {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
 }
-#body-task {
+.body-task {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-align: left;
 }
-#description-task {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: left;
-}
+
+
 /*-------------------*/
 .do {
     cursor: pointer;
