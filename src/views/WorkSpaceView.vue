@@ -77,7 +77,7 @@ export default {
                     limitDate: '2021-10-20'
                 }
             ],
-            logged: true,
+            logged: true
         }
     },
     methods: {

@@ -11,36 +11,60 @@
                 <template v-if="logged">
                     <li class="task" v-for="(task, index) in tasks" :key="index">
                         <div class="head-task">
-                            <h5>{{ task.title }}</h5>
-                            <p>{{ task.initDate }}</p>
+                            <div>
+                                <h5 v-if="!task.editMode">{{ task.title }}</h5>
+                                <input v-else class="edit-input" v-model="task.title" type="text">
+                            </div>
+                            <div>
+                                <p v-if="!task.editMode">{{ task.initDate }}</p>
+                                <input v-else class="edit-input" v-model="task.initDate" type="date">
+                            </div>
                             |
-                            <p>{{ task.limitDate }}</p>
+                            <div>
+                                <p v-if="!task.editMode">{{ task.limitDate }}</p>
+                                <input v-else class="edit-input" v-model="task.limitDate" type="date">
+                            </div>
                             <label class="do">
-                                <input type="checkbox">
+                                <input type="checkbox" />
                                 <svg viewBox="0 0 64 64" height="2em" width="2em">
                                     <path
                                         d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                                        pathLength="575.0541381835938" class="path"></path>
+                                        pathLength="575.0541381835938" class="path">
+                                    </path>
                                 </svg>
                             </label>
                         </div>
                         <div class="body-task">
                             <p class="d-inline-flex gap-1">
                                 <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse"
-                                    :href="'#' + 'task-description' + item" role="button" aria-expanded="false"
+                                    :href="'#' + 'task-description' + index" role="button" aria-expanded="false"
                                     aria-controls="task-description">
                                     Description
                                 </a>
                             </p>
-                            <div class="collapse" :id="'task-description' + item">
+                            <div class="collapse" :id="'task-description' + index">
                                 <div>
-                                    <p>{{ task.description }}</p>
+                                    <p v-if="!task.editMode">{{ task.description }}</p>
+                                    <input v-else class="edit-input" v-model="task.description" type="text">
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                        <div class="wrapper-button">
+                            <button v-if="!task.editMode" type="button" class="btn btn-outline-warning btn-task"
+                                @click="toggleEditMode(index)">
+                                Edit
+                            </button>
+                            <button v-else type="button" class="btn btn-outline-success btn-task" @click="saveTask(index)">
+                                Save
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-task" @click="deleteTask(index)">
+                                Delete
+                            </button>
+                        </div>
                     </li>
                 </template>
+
+
 
                 <template v-else>
                     <li class="task" v-for="item in items" key="item">
@@ -72,10 +96,16 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                        <div class="wrapper-button">
+                            <button type="button" class="btn btn-outline-warning btn-task">
+                                Edit
+                            </button>
+                            <button type="button" class="btn btn-outline-danger btn-task">
+                                Delete
+                            </button>
+                        </div>
                     </li>
                 </template>
-
             </ul>
         </div>
     </div>
@@ -97,9 +127,24 @@ export default {
         tasks: Array,
     },
     methods: {
-        createTask() {
-            console.log("createTask");
+        // createTask() {
+        //   console.log("createTask");
+        // },
+        // delete_task() {
+        //   console.log("delete_task");
+        // },
+        toggleEditMode(index) {
+            this.tasks.forEach((task, i) => {
+                task.editMode = i === index;
+            });
         },
+        saveTask(index) {
+            // Aquí puedes realizar cualquier lógica de guardado, como enviar los datos al servidor
+            this.tasks[index].editMode = false;
+        },
+        deleteTask(index) {
+            this.tasks.splice(index, 1);
+        }
     },
 };
 </script>
@@ -164,6 +209,26 @@ export default {
     text-align: left;
 }
 
+.wrapper-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.btn-task {
+    width: 100px;
+}
+
+.edit-input {
+    width: 100%;
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    padding: 4px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+}
 /*-------------------*/
 .do {
     cursor: pointer;
