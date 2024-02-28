@@ -6,11 +6,12 @@
         management tool.
       </h3>
       <br><br>
-      <SingIn />
-      <br /><br />
-      <SingUp />
-      <br /><br />
-      
+      <template v-if="!loggedIn">
+        <SingIn />
+        <br /><br />
+        <SingUp />
+        <br /><br />
+      </template>
     </div>
   </div>
 </template>
@@ -31,6 +32,11 @@ export default {
     };
   },
   methods: {},
+  computed: {
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+  }
 };
 </script>
 
@@ -59,10 +65,11 @@ export default {
   /* Para centrar la imagen */
   /* Opcional: otras propiedades de fondo como repetición, si es necesario */
 }
-#description-app{
+
+#description-app {
   color: var(--color-text);
   font-size: 1.5em;
-  text-align: center; 
+  text-align: center;
   font-weight: bold;
   text-shadow: 2px 2px 4px #000000;
   font-style: italic;
