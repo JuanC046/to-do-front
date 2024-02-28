@@ -16,8 +16,6 @@
                     <div class="modal-body">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" aria-describedby="nameHelp">
-                        <label for="id">Id</label>
-                        <input type="text" class="form-control" id="id" aria-describedby="idHelp">
                         <label for="email-singUp">E-mail</label>
                         <input type="email" class="form-control" id="email-singUp" aria-describedby="emailHelp">
                         <div id="emailHelp-singUp" class="form-text">We'll never share your email with anyone else.</div>
@@ -39,7 +37,6 @@ export default {
     data() {
         return {
             name: '',
-            id: '',
             email: '',
             password: ''
         }
