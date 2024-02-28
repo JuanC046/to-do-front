@@ -1,7 +1,7 @@
 <template >
     <div id="workSpace-grid">
-        <Menu class="menu" :logged="logged"></Menu>
-        <DashBoard class="dashboard" :logged="logged" :tasks="tasks"></DashBoard>
+        <Menu class="menu" ></Menu>
+        <DashBoard class="dashboard" :tasks="tasks"></DashBoard>
     </div>
 </template>
 <script>

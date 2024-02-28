@@ -14,13 +14,13 @@
         </a>
       </div>
       <br> <br>
-      <template v-if="logged">
+      <template v-if="loggedIn">
         <div id="porfile-wrapper">
           <h4>Welcome</h4>
           <br>
           <h5>Username</h5>
           <br><br>
-          <button class="btn btn-danger" @click="logged = false">Log Out</button>
+          <button class="btn btn-danger" @click="this.$store.dispatch('toggleLogin')">Log Out</button>
         </div>
       </template>
       <template v-else>
@@ -51,6 +51,11 @@ export default {
     logged: Boolean,
   },
   methods: {},
+  computed: {
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+  }
 };
 </script>
 <style scoped>

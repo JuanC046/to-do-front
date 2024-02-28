@@ -1,13 +1,20 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-  state: {
+  state: { // Variables globales
+    loggedIn: true,
   },
   getters: {
   },
   mutations: {
+    toggleLogin(state) {
+      state.loggedIn = !state.loggedIn;
+    }
   },
   actions: {
+    toggleLogin({commit}){
+      commit('toggleLogin');
+    }
   },
   modules: {
   }

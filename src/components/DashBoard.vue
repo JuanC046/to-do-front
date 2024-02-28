@@ -8,7 +8,7 @@
             </div>
 
             <ul id="tasks-list">
-                <template v-if="logged">
+                <template v-if="loggedIn">
                     <li class="task" v-for="(task, index) in tasks" :key="index">
                         <div class="head-task">
                             <div>
@@ -123,7 +123,6 @@ export default {
         };
     },
     props: {
-        logged: Boolean,
         tasks: Array,
     },
     methods: {
@@ -146,6 +145,11 @@ export default {
             this.tasks.splice(index, 1);
         }
     },
+    computed: {
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    },
+  }
 };
 </script>
 <style scoped>
