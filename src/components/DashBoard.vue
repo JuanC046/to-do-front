@@ -207,13 +207,15 @@ export default {
     }
   }, 5); 
 
-      //Enviar nueva tarea al servidor
-      this.newTask = {
-        title: this.newTask.title,
-        description: this.newTask.description,
-        initDate: this.newTask.initDate,
-        limitDate: this.newTask.limitDate,
-      };
+      // //Enviar nueva tarea al servidor
+      // newTask = {
+      //   title: this.newTask.title,
+      //   description: this.newTask.description,
+      //   initDate: this.newTask.initDate,
+      //   limitDate: this.newTask.limitDate,
+      // };
+      // // Logica de envío aquí
+
       console.log(this.tasks[this.tasks.length - 1]);
       //Limpiar el formulario
       this.newTask = {
@@ -232,7 +234,12 @@ export default {
       });
     },
     saveTask(index) {
-      // Aquí puedes realizar cualquier lógica de guardado, como enviar los datos al servidor
+      // lógica de guardado, envio los datos al servidor
+      if (this.tasks[index].id === null) {
+        // Crear nueva tarea
+      } else {
+        // Actualizar tarea
+      }
       this.tasks[index].editMode = false;
     },
     deleteTask(index) {
