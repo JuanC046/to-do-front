@@ -54,6 +54,7 @@ export default {
     handleLogout() {
     this.$store.dispatch('toggleLogin');
     this.$store.dispatch('setUser', { name: '', id: '' });
+    window.location.href = '/';
   },
   },
   computed: {
