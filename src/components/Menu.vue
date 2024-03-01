@@ -18,9 +18,9 @@
         <div id="porfile-wrapper">
           <h4>Welcome</h4>
           <br>
-          <h5>Username</h5>
+          <h5><strong>{{this.user.name}}</strong></h5>
           <br><br>
-          <button class="btn btn-danger" @click="this.$store.dispatch('toggleLogin')">Log Out</button>
+          <button class="btn btn-danger" @click="handleLogout">Log Out</button>
         </div>
       </template>
       <template v-else>
@@ -50,10 +50,18 @@ export default {
   props: {
     logged: Boolean,
   },
-  methods: {},
+  methods: {
+    handleLogout() {
+    this.$store.dispatch('toggleLogin');
+    this.$store.dispatch('setUser', { name: '', id: '' });
+  },
+  },
   computed: {
     loggedIn() {
       return this.$store.state.loggedIn;
+    },
+    user() {
+      return this.$store.state.user;
     },
   }
 };

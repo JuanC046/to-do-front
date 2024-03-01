@@ -206,16 +206,6 @@ export default {
       }
     }
   }, 5); 
-
-      // //Enviar nueva tarea al servidor
-      // newTask = {
-      //   title: this.newTask.title,
-      //   description: this.newTask.description,
-      //   initDate: this.newTask.initDate,
-      //   limitDate: this.newTask.limitDate,
-      // };
-      // // Logica de envío aquí
-
       console.log(this.tasks[this.tasks.length - 1]);
       //Limpiar el formulario
       this.newTask = {
