@@ -8,6 +8,7 @@ export default createStore({
       name: '',
       id:""
     },
+    tasks: []
   },
   getters: {
   },
@@ -18,6 +19,9 @@ export default createStore({
     setUser(state, user){
       state.user.name = user.name;
       state.user.id = user.id;
+    },
+    setTasks(state, tasks) {
+      state.tasks = tasks;
     }
   },
   actions: {
@@ -26,6 +30,9 @@ export default createStore({
     },
     setUser({commit}, user){
       commit('setUser', user);
+    },
+    setTasks({ commit }, tasks) {
+      commit('setTasks', tasks);
     }
   },
   modules: {

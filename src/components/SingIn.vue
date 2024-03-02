@@ -82,6 +82,18 @@ export default {
     };
   },
   methods: {
+    async getTasks() {
+      console.log("getTasks");
+      //Cuando traigo las tareas del servidor????
+      await fetch(`${this.server}/task/list/${this.user.id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          let tasks = data.body.tasks;
+          this.$store.dispatch("setTasks", tasks);
+        })
+        .catch((error) => console.error(error));
+    },
     async singIn() {
       console.log(this.userData);
       console.log(
@@ -95,10 +107,11 @@ export default {
         body: JSON.stringify(this.userData), // body data type must match "Content-Type" header
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then(async (data) => {
           if (data.body.loggedIn) {
             this.$store.dispatch("setUser", data.body);
             this.$store.dispatch("toggleLogin");
+            await this.getTasks();
             console.log("Success:", data);
             window.location.href = "/work-space";
           } else {

@@ -15,10 +15,12 @@
 
       <ul id="tasks-list" ref="tasksList">
         <template v-if="loggedIn">
-          <li class="task" v-for="(task, index) in tasks" :key="index">
+          <li class="task" v-for="(task, index) in this.tasks" :key="index">
             <div class="head-task">
               <div>
-                <h5 v-if="!task.editMode"> <strong>{{ task.title }}</strong></h5>
+                <h5 v-if="!task.editMode">
+                  <strong>{{ task.title }}</strong>
+                </h5>
                 <input
                   v-else
                   class="edit-input"
@@ -164,20 +166,19 @@
         </template>
       </ul>
       <button
-          type="button"
-          class="btn btn-primary button-create-task"
-          @click="createTask"
-        >
-          New Task +
-        </button>
+        type="button"
+        class="btn btn-primary button-create-task"
+        @click="createTask"
+      >
+        New Task +
+      </button>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: "DashBoard",
-  components: {
-  },
+  components: {},
   data() {
     return {
       items: [1, 2, 3, 4, 5],
@@ -190,22 +191,29 @@ export default {
     };
   },
   props: {
-    tasks: Array,
   },
+//   mounted() {
+//   // Escuchar el evento 'login-success'
+//   this.$bus.on('login-success', () => {
+//     // Una vez que se emite el evento, obtener las tareas
+//     this.fetchTasks();
+//   });
+// },
   methods: {
     createTask() {
       this.tasks.push(this.newTask);
       //Mostrar el mensaje
-       this.toggleEditMode(this.tasks.length - 1);
-       // Hacer focus en el último elemento de la lista
-  setTimeout(() => {
-    if (this.$refs.tasksList) {
-      const lastTaskElement = this.$refs.tasksList.children[this.tasks.length - 1];
-      if (lastTaskElement) {
-        lastTaskElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, 5); 
+      this.toggleEditMode(this.tasks.length - 1);
+      // Hacer focus en el último elemento de la lista
+      setTimeout(() => {
+        if (this.$refs.tasksList) {
+          const lastTaskElement =
+            this.$refs.tasksList.children[this.tasks.length - 1];
+          if (lastTaskElement) {
+            lastTaskElement.scrollIntoView({ behavior: "smooth" });
+          }
+        }
+      }, 5);
       console.log(this.tasks[this.tasks.length - 1]);
       //Limpiar el formulario
       this.newTask = {
@@ -240,7 +248,23 @@ export default {
     loggedIn() {
       return this.$store.state.loggedIn;
     },
+    user() {
+      return this.$store.state.user;
+    },
+    tasks() {
+      return this.$store.state.tasks;
+    },
   },
+  watch: {
+    loggedIn(newValue) {
+      console.log("loggedIn changed to:", newValue); // Verificar si loggedIn cambia a true
+      if (newValue) {
+        // Si el usuario está logueado, obtener las tareas
+        console.log("Calling getTasks...");
+        this.getTasks();
+      }
+    }
+  }
 };
 </script>
 <style scoped>
