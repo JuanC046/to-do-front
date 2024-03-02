@@ -54,6 +54,7 @@ export default {
     handleLogout() {
     this.$store.dispatch('toggleLogin');
     this.$store.dispatch('setUser', { name: '', id: '' });
+    this.$store.distpatch('setTasks', []);
     window.location.href = '/';
   },
   },
@@ -63,6 +64,9 @@ export default {
     },
     user() {
       return this.$store.state.user;
+    },
+    tasks() {
+      return this.$store.state.tasks;
     },
   }
 };

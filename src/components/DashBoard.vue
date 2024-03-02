@@ -53,7 +53,7 @@
                 />
               </div>
               <label class="do">
-                <input type="checkbox" />
+                <input v-model="task.completed" type="checkbox" :value="task.completed" />
                 <svg viewBox="0 0 64 64" height="2em" width="2em">
                   <path
                     d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
@@ -183,10 +183,13 @@ export default {
     return {
       items: [1, 2, 3, 4, 5],
       newTask: {
+        id: null,
         title: "",
         description: "",
         initDate: "",
         limitDate: "",
+        completed: 0,
+        deleted: 0,
       },
     };
   },
@@ -201,7 +204,16 @@ export default {
 // },
   methods: {
     createTask() {
-      this.tasks.push(this.newTask);
+      let newTask = {
+        id: null,
+        title: "",
+        description: "",
+        initDate: "",
+        limitDate: "",
+        completed: 0,
+        deleted: 0,
+      };
+      this.tasks.push(newTask);
       //Mostrar el mensaje
       this.toggleEditMode(this.tasks.length - 1);
       // Hacer focus en el último elemento de la lista
@@ -215,17 +227,8 @@ export default {
         }
       }, 5);
       console.log(this.tasks[this.tasks.length - 1]);
-      //Limpiar el formulario
-      this.newTask = {
-        title: "",
-        description: "",
-        initDate: "",
-        limitDate: "",
-      };
+      
     },
-    // delete_task() {
-    //   console.log("delete_task");
-    // },
     toggleEditMode(index) {
       this.tasks.forEach((task, i) => {
         task.editMode = i === index;
@@ -235,13 +238,56 @@ export default {
       // lógica de guardado, envio los datos al servidor
       if (this.tasks[index].id === null) {
         // Crear nueva tarea
+        console.log("Creating new task...", this.tasks[index]);
+        console.log("User id:", this.user.id);
+        console.log("Task list:", this.tasks);
+        this.tasks[index].userId = this.user.id;
+        this.tasks[index].editMode = false;
+        this.$store.dispatch("setTasks", this.tasks);
+        fetch(`${this.server}/task/create`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.tasks[index]),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          })
       } else {
-        // Actualizar tarea
+        // Actualizar tarea existente
+        console.log("Updating task...", this.tasks[index]);
+        this.tasks[index].userId = this.user.id;
+        this.tasks[index].editMode = false;
+        this.$store.dispatch("setTasks", this.tasks);
+        fetch(`${this.server}/task/update`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.tasks[index]),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          })
       }
-      this.tasks[index].editMode = false;
     },
     deleteTask(index) {
       this.tasks.splice(index, 1);
+      this.$store.dispatch("setTasks", this.tasks);
+      fetch(`${this.server}/task/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id: this.tasks[index].id, userId: this.user.id}),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
     },
   },
   computed: {
@@ -253,6 +299,9 @@ export default {
     },
     tasks() {
       return this.$store.state.tasks;
+    },
+    server() {
+      return this.$store.state.server;
     },
   },
   watch: {

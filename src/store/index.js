@@ -22,6 +22,9 @@ export default createStore({
     },
     setTasks(state, tasks) {
       state.tasks = tasks;
+    },
+    addTask(state, task) {
+      state.tasks.push(task);
     }
   },
   actions: {
@@ -33,6 +36,9 @@ export default createStore({
     },
     setTasks({ commit }, tasks) {
       commit('setTasks', tasks);
+    },
+    addTask({ commit }, task) {
+      commit('addTask', task);
     }
   },
   modules: {
