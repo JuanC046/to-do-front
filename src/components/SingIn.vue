@@ -96,9 +96,6 @@ export default {
     },
     async singIn() {
       console.log(this.userData);
-      console.log(
-        `${this.server}/user/login/${this.userData.email}/${this.userData.password}`
-      );
       await fetch(`${this.server}/user/login`, {
         method: "POST",
         headers: {

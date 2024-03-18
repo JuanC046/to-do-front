@@ -203,19 +203,34 @@ export default {
 //   });
 // },
   methods: {
+    async fetchTasks() {
+      console.log("Fetching tasks...");
+      await fetch(`${this.server}/task/list/${this.user.id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          let tasks = data.body.tasks;
+          tasks.forEach((task) => {
+            task.editMode = false;
+          });
+          this.$store.dispatch("setTasks", tasks);
+          //localStorage.setItem("tasks", JSON.stringify(tasks));
+        })
+        .catch((error) => console.error(error));
+    },
     createTask() {
       let newTask = {
-        id: null,
+        id: "",
         title: "",
         description: "",
         initDate: "",
         limitDate: "",
         completed: 0,
         deleted: 0,
+        editMode: true,
       };
       this.tasks.push(newTask);
-      //Mostrar el mensaje
-      this.toggleEditMode(this.tasks.length - 1);
+    
       // Hacer focus en el último elemento de la lista
       setTimeout(() => {
         if (this.$refs.tasksList) {
@@ -227,24 +242,35 @@ export default {
         }
       }, 5);
       console.log(this.tasks[this.tasks.length - 1]);
-      
     },
     toggleEditMode(index) {
       this.tasks.forEach((task, i) => {
         task.editMode = i === index;
       });
     },
-    saveTask(index) {
-      // lógica de guardado, envio los datos al servidor
-      if (this.tasks[index].id === null) {
+    async saveTask(index) {
+      if (this.tasks[index].title === "") {
+        alert("Task title is required!");
+        return;
+      }
+      if (this.tasks[index].initDate === "") {
+        alert("Init date is required!");
+        return;
+      }
+      if (this.tasks[index].limitDate === "") {
+        alert("Limit date is required!");
+        return;
+      }
+      if (this.tasks[index].id === "") {
         // Crear nueva tarea
         console.log("Creating new task...", this.tasks[index]);
         console.log("User id:", this.user.id);
         console.log("Task list:", this.tasks);
         this.tasks[index].userId = this.user.id;
         this.tasks[index].editMode = false;
-        this.$store.dispatch("setTasks", this.tasks);
-        fetch(`${this.server}/task/create`, {
+        console.log("Task list:", this.tasks);
+        console.log("New Task:", this.tasks[index]);
+        await fetch(`${this.server}/task/create`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -260,8 +286,7 @@ export default {
         console.log("Updating task...", this.tasks[index]);
         this.tasks[index].userId = this.user.id;
         this.tasks[index].editMode = false;
-        this.$store.dispatch("setTasks", this.tasks);
-        fetch(`${this.server}/task/update`, {
+        await fetch(`${this.server}/task/update`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -273,11 +298,10 @@ export default {
             console.log(data);
           })
       }
+      await this.fetchTasks();
     },
-    deleteTask(index) {
-      this.tasks.splice(index, 1);
-      this.$store.dispatch("setTasks", this.tasks);
-      fetch(`${this.server}/task/delete`, {
+    async deleteTask(index) {
+      await fetch(`${this.server}/task/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -288,6 +312,8 @@ export default {
         .then((data) => {
           console.log(data);
         })
+      this.tasks.splice(index, 1);
+      await this.fetchTasks();
     },
   },
   computed: {
@@ -304,16 +330,6 @@ export default {
       return this.$store.state.server;
     },
   },
-  watch: {
-    loggedIn(newValue) {
-      console.log("loggedIn changed to:", newValue); // Verificar si loggedIn cambia a true
-      if (newValue) {
-        // Si el usuario está logueado, obtener las tareas
-        console.log("Calling getTasks...");
-        this.getTasks();
-      }
-    }
-  }
 };
 </script>
 <style scoped>
