@@ -39,6 +39,7 @@
                 class="form-control"
                 id="name"
                 aria-describedby="nameHelp"
+                placeholder="Enter your name."
               />
               <label for="email-singUp">E-mail</label>
               <input
@@ -47,6 +48,9 @@
                 class="form-control"
                 id="email-singUp"
                 aria-describedby="emailHelp"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                title="Please enter a valid email address."
+                placeholder="Enter your email address."
               />
               <div id="emailHelp-singUp" class="form-text">
                 We'll never share your email with anyone else.
@@ -57,6 +61,7 @@
                 type="password"
                 class="form-control"
                 id="password-singUp"
+                placeholder="Enter your password."
               />
             </div>
             <div id="modal-footer" class="modal-footer">

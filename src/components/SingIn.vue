@@ -39,6 +39,10 @@
                 class="form-control"
                 id="email"
                 aria-describedby="emailHelp"
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                title="Please enter a valid email address."
+                placeholder="Enter your email address."
+                
               />
               <div id="emailHelp" class="form-text">
                 We'll never share your email with anyone else.
@@ -49,6 +53,7 @@
                 type="password"
                 class="form-control"
                 id="password"
+                placeholder="Enter your password."
               />
             </div>
             <div id="modal-footer" class="modal-footer">
@@ -120,6 +125,7 @@ export default {
             window.location.href = "/work-space";
           } else {
             console.log("Error:", data);
+            alert("User not found!");
             this.userData = {
               email: "User not found!",
               password: "",
