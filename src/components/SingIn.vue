@@ -84,7 +84,6 @@ export default {
   methods: {
     async getTasks() {
       console.log("getTasks");
-      //Cuando traigo las tareas del servidor????
       await fetch(`${this.server}/task/list/${this.user.id}`)
         .then((response) => response.json())
         .then((data) => {
