@@ -90,6 +90,14 @@ export default {
         .then((data) => {
           console.log(data);
           let tasks = data.body.tasks;
+          tasks.forEach((task) => {
+            task.editMode = false;
+            if (task.completed === 1) {
+              task.completed = true;
+            } else {
+              task.completed = false;
+            }
+          });
           this.$store.dispatch("setTasks", tasks);
         })
         .catch((error) => console.error(error));

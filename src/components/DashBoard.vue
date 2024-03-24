@@ -52,16 +52,9 @@
                   placeholder="Limit date"
                 />
               </div>
-              <label class="do">
-                <input v-model="task.completed" type="checkbox" :value="task.completed" />
-                <svg viewBox="0 0 64 64" height="2em" width="2em">
-                  <path
-                    d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
-                    pathLength="575.0541381835938"
-                    class="path"
-                  ></path>
-                </svg>
-              </label>
+              <div class="checkbox-wrapper">
+                <input id="myCheckbox" type="checkbox" v-model="task.completed" @change="completeTask(index)"  />
+              </div>
             </div>
             <div class="body-task">
               <p class="d-inline-flex gap-1">
@@ -193,15 +186,14 @@ export default {
       },
     };
   },
-  props: {
-  },
-//   mounted() {
-//   // Escuchar el evento 'login-success'
-//   this.$bus.on('login-success', () => {
-//     // Una vez que se emite el evento, obtener las tareas
-//     this.fetchTasks();
-//   });
-// },
+  props: {},
+  //   mounted() {
+  //   // Escuchar el evento 'login-success'
+  //   this.$bus.on('login-success', () => {
+  //     // Una vez que se emite el evento, obtener las tareas
+  //     this.fetchTasks();
+  //   });
+  // },
   methods: {
     async fetchTasks() {
       console.log("Fetching tasks...");
@@ -212,6 +204,11 @@ export default {
           let tasks = data.body.tasks;
           tasks.forEach((task) => {
             task.editMode = false;
+            if (task.completed === 1) {
+              task.completed = true;
+            } else {
+              task.completed = false;
+            }
           });
           this.$store.dispatch("setTasks", tasks);
           //localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -230,7 +227,7 @@ export default {
         editMode: true,
       };
       this.tasks.push(newTask);
-    
+
       // Hacer focus en el último elemento de la lista
       setTimeout(() => {
         if (this.$refs.tasksList) {
@@ -280,7 +277,7 @@ export default {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-          })
+          });
       } else {
         // Actualizar tarea existente
         console.log("Updating task...", this.tasks[index]);
@@ -296,8 +293,23 @@ export default {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-          })
+          });
       }
+      await this.fetchTasks();
+    },
+    async completeTask(index) {
+      //this.tasks[index].completed = !this.tasks[index].completed;
+      await fetch(`${this.server}/task/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.tasks[index]),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
       await this.fetchTasks();
     },
     async deleteTask(index) {
@@ -306,12 +318,15 @@ export default {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id: this.tasks[index].id, userId: this.user.id}),
+        body: JSON.stringify({
+          id: this.tasks[index].id,
+          userId: this.user.id,
+        }),
       })
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-        })
+        });
       this.tasks.splice(index, 1);
       await this.fetchTasks();
     },
@@ -447,7 +462,7 @@ export default {
   stroke-dashoffset: 0;
 }
 
-.do input:checked ~ svg .path {
+.do input[type="checkbox"]:checked + svg .path {
   stroke-dasharray: 70.5096664428711 9999999;
   stroke-dashoffset: -262.2723388671875;
 }
